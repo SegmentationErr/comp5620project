@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 // 下面这一行为新增数据库关联注解
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@MapperScan("com.ELEC5620.MotionGame.mapper")
+@MapperScan("com.ELEC5620.MotionGame.Mapper")
 public class MotionGameApplication {
 
 	public static void main(String[] args) {
