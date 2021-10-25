@@ -29,7 +29,7 @@ public class ScoreController {
 
     @RequestMapping(value = "/gamescore",method = RequestMethod.POST)
     public Integer uploadScore(@RequestParam("gameId") int gameId, @RequestParam("score") float score, HttpServletRequest request) throws MyException {
-        Integer playerId = (Integer) request.getSession().getAttribute(SESSION_KEY);
+        String playerId = (String) request.getSession().getAttribute(SESSION_KEY);
         if (playerId == null){
             throw new MyException("The session is broken to upload the score.");
         }

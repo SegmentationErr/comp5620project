@@ -2,7 +2,7 @@ package com.ELEC5620.MotionGame.Model;
 
 public class GameScoreModel {
     Integer id;
-    Integer playerId;
+    String playerId;
     Integer gameId;
     Float score;
     Long gameDate;
@@ -15,11 +15,11 @@ public class GameScoreModel {
         this.id = id;
     }
 
-    public Integer getPlayerId() {
+    public String getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(Integer playerId) {
+    public void setPlayerId(String playerId) {
         this.playerId = playerId;
     }
 
