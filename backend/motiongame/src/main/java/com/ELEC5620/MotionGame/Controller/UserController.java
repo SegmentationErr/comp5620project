@@ -10,6 +10,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
     @RequestMapping("/")
     public String Index() {
         List users = userService.selectAll();
