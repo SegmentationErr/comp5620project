@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mapper
 @Component
-public interface  UserMapper {
+public interface UserMapper {
 
     // 插入 并查询id 赋给传入的对象
-    @Insert("INSERT INTO user(key, value) VALUES(#{key}, #{value})")
+    @Insert("INSERT INTO user(id, name, role, pwdHash) VALUES(#{id},#{name},#{role},#{pwdHash})")
 //    @SelectKey(statement = "SELECT seq id FROM sqlite_sequence WHERE (name = 'hello')", before = false, keyProperty = "id", resultType = int.class)
     int insert(UserModel model);
 

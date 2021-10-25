@@ -50,8 +50,28 @@ public class AuthController {
     }
 
     @RequestMapping("/register")
-    public String register() {
-//        List users = userService.selectAll();
-        return "Login Finish";
+    public UserModel register(@RequestParam("id") Integer id,@RequestParam("password") String password,@RequestParam("name") String name, HttpServletRequest req, HttpServletResponse res)  throws Exception {
+        UserModel userModel = userService.select(id);
+        if (userModel != null){
+            throw new MyException("Id exist.");
+        }
+
+        userModel = new UserModel();
+        userModel.setId(id);
+        userModel.setName(name);
+        userModel.setRole(UserModel.NORMAL_PLAYER_ROLE);
+        String md5 =  MD5Encoder.encode(MessageDigest.getInstance("MD5").digest(password.getBytes()));;
+        userModel.setPwdHash(md5);
+        userService.insert(userModel);
+        userModel.setPwdHash(null);
+
+        HttpSession session = req.getSession();
+        session.setMaxInactiveInterval(WebSecurityConfig.SESSION_EXTEND_SECOND);
+        session.setAttribute("userId",userModel.getId());
+        Cookie cookie = new Cookie("JSESSIONID",session.getId());
+        cookie.setMaxAge(30);
+        res.addCookie(cookie);
+
+        return userModel;
     }
 }
