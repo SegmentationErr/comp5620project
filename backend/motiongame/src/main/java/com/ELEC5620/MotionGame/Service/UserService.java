@@ -21,7 +21,7 @@ public class UserService {
         return dao.insert(model) > 0;
     }
 
-    public UserModel select(int id) {
+    public UserModel select(String id) {
         return dao.select(id);
     }
 

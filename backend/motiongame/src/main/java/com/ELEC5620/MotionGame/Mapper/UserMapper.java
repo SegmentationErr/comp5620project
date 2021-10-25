@@ -17,7 +17,7 @@ public interface UserMapper {
 
     // 根据 ID 查询
     @Select("SELECT * FROM user WHERE id=#{id}")
-    UserModel select(int id);
+    UserModel select(String id);
 
     // 查询全部
     @Select("SELECT * FROM user")
