@@ -1,4 +1,4 @@
-package com.ELEC5620.MotionGame.config;
+package com.ELEC5620.MotionGame.Config;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
