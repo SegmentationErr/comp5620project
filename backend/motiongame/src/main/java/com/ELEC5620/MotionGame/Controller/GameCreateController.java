@@ -20,7 +20,7 @@ public class GameCreateController {
 
     @RequestMapping("/gamecreate")
     public Integer create(@RequestParam("gameName") String gameName, @RequestParam("configFileContent") String configFileContent, HttpServletRequest request) throws MyException {
-        String playerId = (String) request.getSession().getAttribute(SESSION_KEY);
+        Integer playerId = (Integer) request.getSession().getAttribute(SESSION_KEY);
         if (playerId == null){
             throw new MyException("The session is broken to upload the score.");
         }

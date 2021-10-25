@@ -21,7 +21,7 @@ public class UserService {
         return dao.insert(model) > 0;
     }
 
-    public UserModel select(String id) {
+    public UserModel select(Integer id) {
         return dao.select(id);
     }
 
@@ -29,8 +29,8 @@ public class UserService {
         return dao.selectAll();
     }
 
-    public boolean updateValue(UserModel model) {
-        return dao.updateValue(model) > 0;
+    public boolean updateRole(Integer id, Integer role) {
+        return dao.updateRole(id, role) > 0;
     }
 
     public boolean delete(Integer id) {

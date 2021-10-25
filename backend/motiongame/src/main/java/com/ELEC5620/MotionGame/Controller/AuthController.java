@@ -27,7 +27,7 @@ public class AuthController {
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public UserModel login(@RequestParam("id") String id, @RequestParam("password") String pwd, HttpServletRequest req, HttpServletResponse res)  throws Exception  {
+    public UserModel login(@RequestParam("id") Integer id, @RequestParam("password") String pwd, HttpServletRequest req, HttpServletResponse res)  throws Exception  {
         UserModel userModel = userService.select(id);
         if (userModel == null){
             throw new MyException("Id doesn't exist.");
@@ -50,7 +50,7 @@ public class AuthController {
     }
 
     @RequestMapping("/register")
-    public UserModel register(@RequestParam("id") String id,@RequestParam("password") String password,@RequestParam("name") String name, HttpServletRequest req, HttpServletResponse res)  throws Exception {
+    public UserModel register(@RequestParam("id") Integer id,@RequestParam("password") String password,@RequestParam("name") String name, HttpServletRequest req, HttpServletResponse res)  throws Exception {
         UserModel userModel = userService.select(id);
         if (userModel != null){
             throw new MyException("Id exist.");

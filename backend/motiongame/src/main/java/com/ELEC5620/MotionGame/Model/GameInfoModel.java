@@ -11,7 +11,7 @@ public class GameInfoModel {
     Integer id;
     Integer type;
     String configFileContent;
-    String creatorId;
+    Integer creatorId;
     String gameName;
 
     public Integer getId() {
@@ -38,11 +38,11 @@ public class GameInfoModel {
         this.configFileContent = configFileContent;
     }
 
-    public String getCreatorId() {
+    public Integer getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
     }
 
