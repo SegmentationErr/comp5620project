@@ -11,18 +11,17 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feedback")
 public class FeedbackController {
     @Autowired
     FeedbackService feedbackService;
 
-    @RequestMapping("/list")
+    @GetMapping("/feedback")
     public List<FeedbackModel> listAll(){
         return feedbackService.selectAll();
     }
 
-    @RequestMapping("/post")
-    public FeedbackModel postFeedback(@RequestParam("content") String content,
+    @PostMapping("/feedback")
+    public String postFeedback(@RequestParam("content") String content,
                                @RequestParam("userId") Integer userId,
                                @RequestParam("userRole") Integer userRole) throws Exception {
         FeedbackModel feedback = new FeedbackModel();
@@ -32,16 +31,9 @@ public class FeedbackController {
         feedback.setType(userRole);
         try {
             feedbackService.insert(feedback);
-            feedback = feedbackService.select(feedback.getId());
         } catch (Exception e) {
             throw new Exception(e);
         }
-        return feedback;
-    }
-
-    @RequestMapping("/list/{id}")
-    @ResponseBody
-    public FeedbackModel getFeedbackById(@PathVariable("id") int id) {
-        return feedbackService.select(id);
+        return "success";
     }
 }
