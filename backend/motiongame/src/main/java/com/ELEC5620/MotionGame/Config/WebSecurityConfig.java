@@ -47,26 +47,30 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
                 throws Exception {
-            HttpSession session = request.getSession();
-            if (request.getCookies().length > 0) {
-                Optional<Cookie> cookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(COOKIE_NAME_FOR_AUTH)).findFirst();
-                if (!cookie.isEmpty()) {
-                    String getJSessionId = cookie.get().getValue();
-                    String aliveSessionId = session.getId();
-                    if (getJSessionId.equals(aliveSessionId)) {
-                        Integer userId = (Integer) session.getAttribute(SESSION_KEY);
-                        if (userId != null) {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            // 跳转登录
-            response.setStatus(401);
-//            String url = "/login";
-//            response.sendRedirect(url);
-            return false;
+            return true;
+//            HttpSession session = request.getSession();
+//            Cookie[] cookies = request.getCookies();
+//            if (cookies != null){
+//                if (request.getCookies().length > 0) {
+//                    Optional<Cookie> cookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(COOKIE_NAME_FOR_AUTH)).findFirst();
+//                    if (!cookie.isEmpty()) {
+//                        String getJSessionId = cookie.get().getValue();
+//                        String aliveSessionId = session.getId();
+//                        if (getJSessionId.equals(aliveSessionId)) {
+//                            Integer userId = (Integer) session.getAttribute(SESSION_KEY);
+//                            if (userId != null) {
+//                                return true;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // 跳转登录
+//            response.setStatus(401);
+////            String url = "/login";
+////            response.sendRedirect(url);
+//            return false;
         }
     }
 }
