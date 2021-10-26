@@ -26,4 +26,7 @@ public interface FeedbackMapper {
 
     @Delete("DELETE FROM feedback WHERE id = #{id}")
     int delete(int id);
+
+    @Update("UPDATE feedback SET viewStatus = 1 WHERE id = #{id}")
+    int markFeedback(Integer id);
 }
