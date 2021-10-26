@@ -36,4 +36,8 @@ public class FeedbackService {
     public boolean delete(int id) {
         return feedbackMapper.delete(id) > 0;
     }
+
+    public boolean markFeedback(Integer id) {
+        return feedbackMapper.markFeedback(id) > 0;
+    }
 }

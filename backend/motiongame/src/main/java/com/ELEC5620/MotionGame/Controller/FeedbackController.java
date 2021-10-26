@@ -33,4 +33,14 @@ public class FeedbackController {
         }
         return "success";
     }
+
+    @PostMapping("/markfeedback")
+    public String markFeedback(@RequestParam("id") Integer id) throws Exception {
+        try {
+            feedbackService.markFeedback(id);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return "success";
+    }
 }
