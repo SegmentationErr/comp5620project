@@ -22,9 +22,9 @@ class LoginRegister extends Component {
         const onFinish = (values) => {
             console.log('Success:', values);
 
-            const url = backendURL+"register"
-            const val = {"username": values.username, "password": values.password, "id": 1}
-            axios.post(url, values
+            const url = backendURL + "register?" + "password=" + values.password + "&username=" + values.username
+            // const val = {"username": values.username, "password": values.password}
+            axios.post(url, {}
                 ).then((res) => {
                   if (res.status === 200) {
                       console.log("123123123123123123")
@@ -33,8 +33,8 @@ class LoginRegister extends Component {
                     // this.props.history.push("/")
                   }
                 }).catch((error) => {
-                  console.log(error);
-                  this.setState({buttonLoading: false});
+                    console.log(error);
+                //   this.setState({buttonLoading: false});
                 //   errorPrompt();
                 })
         };
