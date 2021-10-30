@@ -19,6 +19,11 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE id=#{id}")
     UserModel select(Integer id);
 
+    // 根据 username 查询
+    @Select("SELECT * FROM user WHERE name=#{name}")
+    UserModel selectByName(String name);
+
+
     // 查询全部
     @Select("SELECT * FROM user")
     List<UserModel> selectAll();

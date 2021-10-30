@@ -24,6 +24,9 @@ public class UserService {
     public UserModel select(Integer id) {
         return dao.select(id);
     }
+    public UserModel selectByName(String userName) {
+        return dao.selectByName(userName);
+    }
 
     public List<UserModel> selectAll() {
         return dao.selectAll();

@@ -27,10 +27,10 @@ public class AuthController {
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public UserModel login(@RequestParam("id") Integer id, @RequestParam("password") String pwd, HttpServletRequest req, HttpServletResponse res)  throws Exception  {
-        UserModel userModel = userService.select(id);
+    public UserModel login(@RequestParam("username") String name, @RequestParam("password") String pwd, HttpServletRequest req, HttpServletResponse res)  throws Exception  {
+        UserModel userModel = userService.selectByName(name);
         if (userModel == null){
-            throw new MyException("Id doesn't exist.");
+            throw new MyException("username doesn't exist.");
         }
         String md5 = MD5Encoder.encode(MessageDigest.getInstance("MD5").digest(pwd.getBytes()));
         boolean isPwdRight = userModel.getPwdHash().equals(md5);
@@ -50,19 +50,19 @@ public class AuthController {
     }
 
     @RequestMapping("/register")
-    public UserModel register(@RequestParam("id") Integer id,@RequestParam("password") String password,@RequestParam("name") String name, HttpServletRequest req, HttpServletResponse res)  throws Exception {
-        UserModel userModel = userService.select(id);
+    public UserModel register(@RequestParam("password") String password,@RequestParam("username") String name, HttpServletRequest req, HttpServletResponse res)  throws Exception {
+        UserModel userModel = userService.selectByName(name);
         if (userModel != null){
-            throw new MyException("Id exist.");
+            throw new MyException("userName exist.");
         }
 
         userModel = new UserModel();
-        userModel.setId(id);
         userModel.setName(name);
         userModel.setRole(UserModel.NORMAL_PLAYER_ROLE);
         String md5 =  MD5Encoder.encode(MessageDigest.getInstance("MD5").digest(password.getBytes()));;
         userModel.setPwdHash(md5);
         userService.insert(userModel);
+        userModel = userService.selectByName(name);
         userModel.setPwdHash(null);
 
         HttpSession session = req.getSession();
