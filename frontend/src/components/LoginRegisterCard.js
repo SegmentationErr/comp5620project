@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import '../App.css'
+import axios from 'axios';
+import { backendURL } from '../config';
 
 class LoginRegister extends Component {
     constructor(props) {
@@ -19,7 +21,23 @@ class LoginRegister extends Component {
     render() { 
         const onFinish = (values) => {
             console.log('Success:', values);
-          };
+
+            const url = backendURL+"register"
+            const val = {"username": values.username, "password": values.password, "id": 1}
+            axios.post(url, values
+                ).then((res) => {
+                  if (res.status === 200) {
+                      console.log("123123123123123123")
+                    // cookie.save("Username",res.data.Username, {path: "/"})
+                    // cookie.save("User_Type",res.data.User_Type, {path: "/"})
+                    // this.props.history.push("/")
+                  }
+                }).catch((error) => {
+                  console.log(error);
+                  this.setState({buttonLoading: false});
+                //   errorPrompt();
+                })
+        };
         
         const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
