@@ -25,7 +25,7 @@ class HomePage extends React.Component {
             <div onClick={this.login} style={{width: '100vw', height: '100vh'}}>
                 <h1 style={{ textAlign: 'center' }}>Motion Detection Game</h1>
                 <div className='bg-image'>
-                    <LoginRegisterCard display={this.state.if_login_display} />
+                    <LoginRegisterCard display={this.state.if_login_display} history={this.props.history} />
                 </div>
                 <h3 style={{ textAlign: 'center' }}>Click Anywhere to Start</h3>
             </div>
