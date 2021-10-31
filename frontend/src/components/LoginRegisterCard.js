@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, notification } from 'antd';
 import '../App.css'
 import axios from 'axios';
+import cookie from 'react-cookies';
 import { backendURL } from '../config';
 
 class LoginRegister extends Component {
@@ -20,27 +21,35 @@ class LoginRegister extends Component {
 
     render() { 
         const onFinish = (values) => {
-            console.log('Success:', values);
+            // console.log('Success:', values);
+            var url = backendURL + "login?" + "password=" + values.password + "&username=" + values.username
+            if (this.state.mode === 'signup') {
+                url = backendURL + "register?" + "password=" + values.password + "&username=" + values.username
+            }
 
-            const url = backendURL+"register"
-            const val = {"username": values.username, "password": values.password, "id": 1}
-            axios.post(url, values
+            axios.post(url, {}
                 ).then((res) => {
                   if (res.status === 200) {
-                      console.log("123123123123123123")
-                    // cookie.save("Username",res.data.Username, {path: "/"})
-                    // cookie.save("User_Type",res.data.User_Type, {path: "/"})
-                    // this.props.history.push("/")
+                        cookie.save("user_id", res.data.id)
+                        cookie.save("user_role", res.data.role)
+                        this.props.history.push("/gamehall")
                   }
                 }).catch((error) => {
-                  console.log(error);
-                  this.setState({buttonLoading: false});
-                //   errorPrompt();
+                    var msg = "Failed to Log In"
+                    if (this.state.mode === 'signup') {
+                        msg = "Failed to Sign Up"
+                    }
+                    if (this.state.mode)
+                    notification.open({
+                        message: msg,
+                        description:
+                          error.response.data.message + " Please check your input"
+                      });
                 })
         };
         
         const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+            console.log('Failed:', errorInfo);
         };
 
         return (
@@ -85,7 +94,7 @@ class LoginRegister extends Component {
                     <Checkbox checked={this.state.mode === 'signup'}  onChange={()=>{
                         this.changeMode('signup')
                     }}>
-                        Sign Up
+                        Sign Up & Log In
                     </Checkbox>
 
                     <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90}}>
