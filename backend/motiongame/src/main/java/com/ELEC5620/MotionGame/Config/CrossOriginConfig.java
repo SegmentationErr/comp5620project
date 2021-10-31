@@ -12,6 +12,7 @@ public class CrossOriginConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping("/**").allowedOrigins("*").allowedOriginPatterns().allowedMethods(ORIGINS).maxAge(3600);
+//        registry.addMapping("/**").allowedOrigins("*").allowedOriginPatterns().allowedMethods(ORIGINS).maxAge(3600);
+        registry.addMapping("/**");
     }
 }

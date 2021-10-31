@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.List;
@@ -73,5 +74,11 @@ public class AuthController {
         res.addCookie(cookie);
 
         return userModel;
+    }
+
+    @RequestMapping("/logout")
+    public int logout(HttpServletRequest req, HttpServletResponse res){
+        req.getSession().removeAttribute("userId");
+        return 0;
     }
 }
