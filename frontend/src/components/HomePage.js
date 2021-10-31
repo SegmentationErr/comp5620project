@@ -27,7 +27,7 @@ class HomePage extends React.Component {
                 <div className='bg-image'>
                     <LoginRegisterCard display={this.state.if_login_display} history={this.props.history} />
                 </div>
-                <h3 style={{ textAlign: 'center' }}>Click Anywhere to Start</h3>
+                <h3 className='sigin-text'>Click Anywhere to Start</h3>
             </div>
         );
     }

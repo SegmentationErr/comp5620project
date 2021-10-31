@@ -22,3 +22,14 @@
   box-shadow: 0 0 30px gray;
   text-align: center;
 }
+
+.sigin-text {
+  text-align: center;
+  animation: blinker 1.8s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
