@@ -39,3 +39,4 @@ Thumbs.db
 *.app
 *.exe
 *.war
+frontend/.eslintcache
