@@ -10,10 +10,10 @@ import PlayGamePage from './components/PlayGamePage';
 ReactDOM.render(
   <Router>
     <div>
+        <Route path="/MotionDetectionGame" component={NavigationBar} />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/gamehall" component={GameHall} />
-        <Route exact path="/navigationbar" component={NavigationBar} />
+        <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
 
       </Switch>
     </div>

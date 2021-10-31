@@ -32,7 +32,7 @@ class LoginRegister extends Component {
                   if (res.status === 200) {
                         cookie.save("user_id", res.data.id)
                         cookie.save("user_role", res.data.role)
-                        this.props.history.push("/gamehall")
+                        this.props.history.push("/MotionDetectionGame/gamehall")
                   }
                 }).catch((error) => {
                     var msg = "Failed to Log In"

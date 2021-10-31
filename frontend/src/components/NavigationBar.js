@@ -26,12 +26,12 @@ class NavigationBar extends Component {
   };
   handleModalOkGameHall = (e) => {
     console.log(e);
-    this.props.history.push("/gamehall");
+    this.props.history.push("/MotionDetectionGame/gamehall");
   };
   handleModalOkMyGames = (e) => {
     console.log(e);
     // TODO: check the url name is mygames or others
-    this.props.history.push("/mygames");
+    this.props.history.push("/MotionDetectionGame/mygames");
   };
   handleClick = (e) => {
     console.log("click ", e.key);
