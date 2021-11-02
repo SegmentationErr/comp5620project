@@ -33,3 +33,18 @@
     opacity: 0;
   }
 }
+
+.game-card {
+  background-color: white;
+  margin: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgb(218, 216, 216);
+  border: 1px solid #434AB6;
+}
+
+
+.gamecards_in_gamehall {
+  margin-left:50px;
+  margin-right: 50px;
+}
+
