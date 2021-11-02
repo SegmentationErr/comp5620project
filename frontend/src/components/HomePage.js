@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css'
 import LoginRegisterCard from './LoginRegisterCard';
 
-class HomePage extends React.Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {

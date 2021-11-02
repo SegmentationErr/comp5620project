@@ -28,6 +28,19 @@
   animation: blinker 1.8s linear infinite;
 }
 
+.camera {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 9;
+  width: 1280px;
+  height: 720px;
+  border-radius: 30px;
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;
