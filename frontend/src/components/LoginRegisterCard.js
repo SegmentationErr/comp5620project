@@ -49,7 +49,7 @@ class LoginRegister extends Component {
                     notification.open({
                         message: msg,
                         description:
-                          error.response.data.message + " Please check your input"
+                        error.response.data.message + " Please check your input"
                       });
                 })
         };

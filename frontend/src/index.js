@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
+import FeedbackCard from './components/FeedbackCard';
 import GameHall from './components/GameHall';
 import HomePage from './components/HomePage';
 import NavigationBar from './components/NavigationBar';
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Route exact path="/MotionDetectionGame/create_game" component={NewGame} />
         <Route exact path="/test" component={PlayGamePage} />
         <Route exact path="/TechnicalStaffPage" component={TechStaff} />
+        <Route exact path="/testFeedback" component={FeedbackCard} />
 
       </Switch>
     </div>

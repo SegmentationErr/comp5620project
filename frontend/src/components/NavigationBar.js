@@ -4,6 +4,7 @@ import "../App.css";
 import $axios from "./Myaxios";
 import cookie from "react-cookies";
 import { backendURL } from "../config";
+import FeedbackCard from "./FeedbackCard";
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class NavigationBar extends Component {
     this.state = {
       isModalVisible: false,
       modalContent: "",
+      isFeedbackModalVisible:false
     };
   }
   handleModalOkLogout = (e) => {
@@ -42,6 +44,7 @@ class NavigationBar extends Component {
           isModalVisible: true,
           handleModalOk: this.handleModalOkLogout,
           modalContent: "Are you sure to logout?",
+          isFeedbackModalVisible:false
         });
         break;
       case "gamehall":
@@ -51,6 +54,7 @@ class NavigationBar extends Component {
             isModalVisible: true,
             handleModalOk: this.handleModalOkGameHall,
             modalContent: "You are in a game, are you sure to go to game hall?",
+           isFeedbackModalVisible:false
           });
         } else {
           this.handleModalOkGameHall();
@@ -65,6 +69,7 @@ class NavigationBar extends Component {
             handleModalOk: this.handleModalOkMyGames,
             modalContent:
               "You are in a game, are you sure to go to your games page?",
+              isFeedbackModalVisible:false
           });
         }
         break;
@@ -76,6 +81,9 @@ class NavigationBar extends Component {
         }
         console.log("mygames");
         break;
+      case "feedback":
+        this.setState({isFeedbackModalVisible:true})
+        break;
       default:
         console.log("default");
     }
@@ -85,7 +93,7 @@ class NavigationBar extends Component {
     return (
       <>
         <Menu onClick={this.handleClick} selectedKeys={null} mode="horizontal">
-          <Menu.Item style={{ marginLeft: 0, background: "#648efa", color: "white" }} key="gamehall">
+          <Menu.Item style={{ marginLeft: "auto", background: "#648efa", color: "white" }} key="gamehall">
             GameHall
           </Menu.Item>
           {cookie.load("user_role") === "3" ? 
@@ -94,18 +102,22 @@ class NavigationBar extends Component {
           {cookie.load("user_role") === "3" ? 
             <Menu.Item key="mygames">My Games</Menu.Item>
            : null}
+          <Menu.Item key="feedback" >Feedback</Menu.Item>
+
           <Menu.Item key="logout">Logout</Menu.Item>
         </Menu>
         <Modal
           title="Warning"
           visible={this.state.isModalVisible}
           onOk={this.state.handleModalOk}
+          maskClosable={false}
           onCancel={() => {
             this.setState({ isModalVisible: false });
           }}
         >
           <p>{this.state.modalContent}</p>
         </Modal>
+        <FeedbackCard isFeedbackModalVisible={this.state.isFeedbackModalVisible}></FeedbackCard>
       </>
     );
   }

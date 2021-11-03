@@ -5,7 +5,11 @@ import com.ELEC5620.MotionGame.Service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
+import static com.ELEC5620.MotionGame.Config.WebSecurityConfig.SESSION_KEY;
 
 @RestController
 public class FeedbackController {
@@ -18,12 +22,15 @@ public class FeedbackController {
     }
 
     @PostMapping("/feedback")
-    public String postFeedback(@RequestParam("content") String content,
-                                      @RequestParam("userId") Integer userId,
-                                      @RequestParam("userRole") Integer userRole) throws Exception {
+    public String postFeedback(HttpServletRequest req, HttpServletResponse res,@RequestParam("content") String content,
+                               @RequestParam(value = "userId", required = false) Integer userId,
+                               @RequestParam("userRole") Integer userRole) throws Exception {
         FeedbackModel feedback = new FeedbackModel();
         feedback.setFeedbackContent(content);
         feedback.setViewStatus(0);
+        if (userId == null){
+            userId = (Integer) req.getSession().getAttribute(SESSION_KEY);
+        }
         feedback.setFeedbackCreatorId(userId);
         feedback.setType(userRole);
         try {

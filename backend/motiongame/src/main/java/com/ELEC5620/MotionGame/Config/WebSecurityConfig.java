@@ -1,7 +1,11 @@
 package com.ELEC5620.MotionGame.Config;
 
+import org.apache.tomcat.util.http.Rfc6265CookieProcessor;
+import org.apache.tomcat.util.http.SameSiteCookies;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.web.http.CookieHttpSessionStrategy;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -75,4 +79,19 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
             return false;
         }
     }
+
+    @Bean
+    public TomcatContextCustomizer sameSiteCookiesConfig() {
+        return context -> {
+            final Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
+            cookieProcessor.setSameSiteCookies(SameSiteCookies.NONE.getValue());
+            context.setCookieProcessor(cookieProcessor);
+        };
+    }
+
+//    @Bean
+//    public CookieHttpSessionStrategy sessionStrategy(){
+//        CookieHttpSessionStrategy sessionStrategy = new CookieHttpSessionStrategy();
+//        sessionStrategy.crea
+//    }
 }
