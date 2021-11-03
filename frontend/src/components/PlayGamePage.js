@@ -5,6 +5,7 @@ import * as cam from '@mediapipe/camera_utils'
 import Webcam from 'react-webcam';
 
 import '../App.css'
+import SummaryCard from './SummaryCard';
 
 const width = 1280
 const height = 720
@@ -21,7 +22,9 @@ class PlayGamePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            score: 0
+            score: 0,
+            ranking: 0,
+            finish: false
         }
         this.webcamRef = React.createRef(null)
         this.canvasRef = React.createRef(null)
@@ -113,7 +116,7 @@ class PlayGamePage extends Component {
     render() { 
         return (
             <div>
-                <h1>Score: {this.state.score}</h1>
+                <h1 style={{textAlign: "right", paddingTop: 20, paddingRight: 30}}>Score: {this.state.score}</h1>
                 <Webcam
                     className="camera"
                     ref={this.webcamRef}
@@ -128,6 +131,10 @@ class PlayGamePage extends Component {
                     ref={this.canvasRef}
                 >
                 </canvas>
+                <button onClick={() => {
+                    this.setState({finish: !this.state.finish})
+                }}>Test Summary</button>
+                <SummaryCard score={this.state.score} ranking={this.state.ranking} display={this.state.finish} />
             </div>
         );
     }

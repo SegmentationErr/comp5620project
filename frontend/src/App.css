@@ -64,3 +64,19 @@
 .new-game {
   text-align: center;
 }
+
+
+.summary-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 600px;
+  margin: -300px 0 0 -400px;
+  background-color: #f0f0f0;
+  border-radius: 80px;
+  opacity: 0.95;
+  box-shadow: 0 0 30px gray;
+  text-align: center;
+  z-index: 20;
+}
