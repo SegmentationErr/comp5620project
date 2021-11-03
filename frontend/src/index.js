@@ -18,7 +18,7 @@ ReactDOM.render(
         <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
         <Route exact path="/MotionDetectionGame/create_game" component={NewGame} />
         <Route exact path="/test" component={PlayGamePage} />
-        <Route exact path="/techstafftest" component={TechStaff} />
+        <Route exact path="/TechnicalStaffPage" component={TechStaff} />
 
       </Switch>
     </div>
