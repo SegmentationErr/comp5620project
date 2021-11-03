@@ -8,6 +8,8 @@ import org.apache.catalina.Session;
 import org.apache.catalina.User;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,10 +45,12 @@ public class AuthController {
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(WebSecurityConfig.SESSION_EXTEND_SECOND);
         session.setAttribute("userId",userModel.getId());
-        Cookie cookie = new Cookie("JSESSIONID",session.getId());
-        cookie.setMaxAge(30);
-        res.addCookie(cookie);
-
+        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
+                .sameSite("None")
+                .secure(true)
+                .path("/")
+                .build();
+        res.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return userModel;
     }
 
@@ -69,10 +73,12 @@ public class AuthController {
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(WebSecurityConfig.SESSION_EXTEND_SECOND);
         session.setAttribute("userId",userModel.getId());
-        Cookie cookie = new Cookie("JSESSIONID",session.getId());
-        cookie.setMaxAge(30);
-        res.addCookie(cookie);
-
+        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
+                .sameSite("None")
+                .secure(true)
+                .path("/")
+                .build();
+        res.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return userModel;
     }
 

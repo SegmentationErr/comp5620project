@@ -15,8 +15,8 @@ public class CrossOriginConfig implements WebMvcConfigurer {
 //        registry.addMapping("/**").allowedOrigins("*").allowedOriginPatterns().allowedMethods(ORIGINS).maxAge(3600);
         registry.addMapping("/**")
                 .allowedHeaders("*")
-                .allowedMethods("*")
-                .allowedOriginPatterns("*")
+                .allowedMethods("*").allowedOrigins("http://localhost:8000")
+//                .allowedOriginPatterns("*")
                 .allowCredentials(true);
     }
 }

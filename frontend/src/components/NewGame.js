@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Button, notification, Checkbox } from 'antd';
 import { PauseOutlined, CaretRightOutlined } from '@ant-design/icons';
 import '../App.css'
-import axios from 'axios';
+import $axios from './Myaxios';
 import cookie from 'react-cookies';
 import { backendURL } from "../config";
 
@@ -24,7 +24,7 @@ class NewGame extends Component {
             var url = backendURL + "gamecreate?" + "gameName=" + values.gameName +
                 "&configFileContent=" + values.configFileContent
 
-            axios.post(url, {}
+            $axios.post(url, {}
                 ).then((res) => {
                   if (res.status === 200) {
                       notification.open({

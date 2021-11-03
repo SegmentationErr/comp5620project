@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, notification, Menu } from "antd";
 import "../App.css";
-import axios from "axios";
+import $axios from "./Myaxios";
 import cookie from "react-cookies";
 import { backendURL } from "../config";
 
@@ -15,7 +15,7 @@ class NavigationBar extends Component {
   }
   handleModalOkLogout = (e) => {
     console.log(e);
-    axios.post(backendURL + "logout", {}).catch((error) => {
+    $axios.post(backendURL + "logout", {}).catch((error) => {
       var msg = "Failed to log out";
       notification.open({
         message: msg,

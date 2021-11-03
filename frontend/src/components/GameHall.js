@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cookie from 'react-cookies';
 import {Row, Col, Divider} from 'antd'
 import GameCard from "./GameCard"
-import axios from 'axios';
+import $axios from './Myaxios';
 import { backendURL } from '../config';
 
 class GameHall extends Component {
@@ -21,8 +21,7 @@ class GameHall extends Component {
 
     componentDidMount() {
         const url = backendURL + "gamelist"
-        axios.defaults.withCredentials = true;
-        axios.get(url, {withCredentials:true}
+        $axios.get(url, {withCredentials:true}
             ).then((res) => {
                 console.log(res)
               if (res.status === 200) {
