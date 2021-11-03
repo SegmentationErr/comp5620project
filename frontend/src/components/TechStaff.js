@@ -109,7 +109,7 @@ class TechStaff extends Component {
                             <Button onClick={() => {this.handleFeedbackClick(item.user_id, item.index)}}
                                 type={item.checked ? "primary" : "default"}
                             >
-                                {item.checked ? "Unread" : 'Checked'}
+                                {item.checked ? "Checked" : 'Unread'}
                             </Button>
                         }
                     >
