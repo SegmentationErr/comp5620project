@@ -11,7 +11,6 @@ const width = 1280
 const height = 720
 const padding = 40
 const regions = [
-    // x 是横着的
     {x: padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
     {x: width / 3 + padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
     {x: width / 3 * 2 + padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
@@ -84,8 +83,6 @@ class PlayGamePage extends Component {
         let y0 = parseInt(y);
         let x1 = parseInt(x + w + 1);
         let y1 = parseInt(y + h + 1);
-        
-        // console.log(x0, y0, x1, y1)
 
         let mark = 1;
 
@@ -93,16 +90,11 @@ class PlayGamePage extends Component {
             let x = landmarks[i].x * width
             let y = landmarks[i].y * height
             
-            console.log(x, y)
             if(x < x0 || x > x1 || y < y0 || y > y1){
                 mark = 0;
                 break;
             }
         }
-
-        // console.log(landmarks);
-        // console.log(regions[region_num]);
-        // console.log(mark);
         return(mark);
     }
 
