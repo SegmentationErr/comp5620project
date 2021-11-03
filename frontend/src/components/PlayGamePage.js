@@ -11,6 +11,7 @@ const width = 1280
 const height = 720
 const padding = 40
 const regions = [
+    // x 是横着的
     {x: padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
     {x: width / 3 + padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
     {x: width / 3 * 2 + padding, y: padding, w: width / 3 - padding * 2, h: height - padding * 4},
@@ -77,11 +78,39 @@ class PlayGamePage extends Component {
         canvasCtx.stroke();
     }
 
+    grade(landmarks, region_num){
+        const {x, y, w, h} = regions[region_num];
+        let x0 = parseInt(x);
+        let y0 = parseInt(y);
+        let x1 = parseInt(x + w + 1);
+        let y1 = parseInt(y + h + 1);
+        
+        // console.log(x0, y0, x1, y1)
+
+        let mark = 1;
+
+        for (let i = 0; i < landmarks.length; i++){
+            let x = landmarks[i].x * width
+            let y = landmarks[i].y * height
+            
+            console.log(x, y)
+            if(x < x0 || x > x1 || y < y0 || y > y1){
+                mark = 0;
+                break;
+            }
+        }
+
+        // console.log(landmarks);
+        // console.log(regions[region_num]);
+        // console.log(mark);
+        return(mark);
+    }
+
     onResults(results) {
         const videoWidth = this.webcamRef.current.video.videoWidth;
         const videoHeight = this.webcamRef.current.video.videoHeight;
         
-        if (results.poseLandmarks !== undefined) {
+        if (results.poseLandmarks !== undefined) {  
             let poseLandmarks = this.mirrorLandmarks(results.poseLandmarks)
             // Set canvas width
             this.canvasRef.current.width = videoWidth;
@@ -99,7 +128,7 @@ class PlayGamePage extends Component {
 
             let region = 1
             this.drawRect(region, canvasCtx)
-
+            this.grade(poseLandmarks, region)
             canvasCtx.restore();
 
         }
