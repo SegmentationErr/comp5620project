@@ -103,7 +103,7 @@ class NewGame extends Component {
                         type="primary"
                         shape="circle"
                         size="large"
-                        icon={this.state.bgm_playing ?<PauseOutlined /> : <CaretRightOutlined />}
+                        icon={this.state.bgm_playing ? <PauseOutlined /> : <CaretRightOutlined />}
                     >
                     </Button>
                     <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90}}>
