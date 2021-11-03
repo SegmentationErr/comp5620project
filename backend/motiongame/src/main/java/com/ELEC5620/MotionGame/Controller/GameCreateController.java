@@ -23,7 +23,7 @@ public class GameCreateController {
     UserService userService;
 
     @RequestMapping("/gamecreate")
-    public Integer create(@RequestParam("gameName") String gameName, @RequestParam("configFileContent") String configFileContent, HttpServletRequest request) throws MyException {
+    public Integer create(@RequestParam("gameName") String gameName, @RequestParam("configFileContent") String configFileContent, @RequestParam(value = "bgmName",required = false) String bgmName, HttpServletRequest request) throws MyException {
         Integer playerId = (Integer) request.getSession().getAttribute(SESSION_KEY);
         if (playerId == null){
             throw new MyException("The session is broken to upload the score.");
@@ -35,6 +35,7 @@ public class GameCreateController {
         gameInfoModel.setCreatorId(playerId);
         gameInfoModel.setCreatorName(userModel.getName());
         gameInfoModel.setConfigFileContent(configFileContent);
+        gameInfoModel.setBgmName(bgmName);
         gameInfoModel.setType(GameInfoModel.CREATOR_CREATED_TYPE);
         gameScoreService.insert(gameInfoModel);
         return 1;

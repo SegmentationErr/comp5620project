@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface GameInfoMapper {
-    @Insert("INSERT INTO game(type, configFileContent, creatorId, gameName, creatorName) VALUES(#{type},#{configFileContent},#{creatorId},#{gameName}, #{creatorName})")
+    @Insert("INSERT INTO game(type, configFileContent, creatorId, gameName, creatorName, bgmName) VALUES(#{type},#{configFileContent},#{creatorId},#{gameName}, #{creatorName}, #{bgmName})")
     int insert(GameInfoModel model);
 
     // 查询全部

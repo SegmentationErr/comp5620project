@@ -19,4 +19,5 @@ public class GameInfoModel {
     Integer creatorId;
     String gameName;
     String creatorName;
+    String bgmName;
 }
