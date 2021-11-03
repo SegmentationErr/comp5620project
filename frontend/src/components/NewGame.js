@@ -41,9 +41,9 @@ class NewGame extends Component {
         };
 
         return (
-            <div className='new-game-card' style={{visibility: this.props.display ? 'visible' : 'hidden' }}>
+            <div className='new-game-card' >
                 <h1>{this.props.display}</h1>
-                <From
+                <Form
                         name="basic"
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 10 }}
@@ -67,12 +67,12 @@ class NewGame extends Component {
                     >
                         <TextArea rows={6} />
                     </Form.Item>
-                    <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90}}>
-                        <Button type="primary" htmlType="submit">
+                    <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90, textAlign: "center"}}>
+                        <Button type="primary" htmlType="submit" >
                             Submit
                         </Button>
                     </Form.Item>
-                </From>
+                </Form>
             </div>
         );
     }

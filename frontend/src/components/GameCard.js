@@ -8,7 +8,7 @@ class GameCard extends Component {
     }
     render() { 
         return (
-                <Card className="game-card" title={this.props.title} style={{width: 300}}>
+                <Card className="game-card" title={this.props.title} style={{width: 300}} hoverable={true} >
                     <p> Creator: {this.props.creator }</p>
                 </Card>
         );

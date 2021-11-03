@@ -5,6 +5,7 @@ import './App.css';
 import GameHall from './components/GameHall';
 import HomePage from './components/HomePage';
 import NavigationBar from './components/NavigationBar';
+import NewGame from './components/NewGame';
 import PlayGamePage from './components/PlayGamePage';
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
+        <Route exact path="/MotionDetectionGame/create_game" component={NewGame} />
         <Route exact path="/test" component={PlayGamePage} />
 
       </Switch>
