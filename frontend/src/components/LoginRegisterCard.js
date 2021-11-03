@@ -28,7 +28,9 @@ class LoginRegister extends Component {
                 url = backendURL + "register?" + "password=" + values.password + "&username=" + values.username
             }
 
-            axios.post(url, {}
+            
+            axios.defaults.withCredentials = true;
+            axios.post(url, {withCredentials:true}
                 ).then((res) => {
                   if (res.status === 200) {
                         cookie.save("user_id", res.data.id)

@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import NavigationBar from './components/NavigationBar';
 import NewGame from './components/NewGame';
 import PlayGamePage from './components/PlayGamePage';
+import TechStaff from './components/TechStaff';
 
 ReactDOM.render(
   <Router>
@@ -17,6 +18,7 @@ ReactDOM.render(
         <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
         <Route exact path="/MotionDetectionGame/create_game" component={NewGame} />
         <Route exact path="/test" component={PlayGamePage} />
+        <Route exact path="/techstafftest" component={TechStaff} />
 
       </Switch>
     </div>
