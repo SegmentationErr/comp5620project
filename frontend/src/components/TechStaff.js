@@ -1,41 +1,64 @@
 import React, { Component } from 'react';
-import { List, Divider, Space } from 'antd';
+import { List, Divider, Space, Button } from 'antd';
 
 //TODO Button1 for application been approved 
 //     Button2 for feedback been marked as important/has been read
+
 class TechStaff extends Component {
     constructor(props) {
         super(props);
-        this.state = { }
+        this.state = {
+            applicationList: [],
+            feedbackList: []
+        }
+
+        this.handleApplicationClick = this.handleApplicationClick.bind(this)
+    }
+
+    handleApplicationClick(user_id, index) {
+        let items = [...this.state.applicationList]
+        items[index] = {...items[index], approved: true}
+        this.setState({applicationList: items})
+    }
+
+    handleFeedbackClick(user_id, index) {
+        let items = [...this.state.feedbackList]
+        items[index] = {...items[index], checked: true}
+        this.setState({feedbackList: items})
+    }
+
+    componentDidMount() {
+        // Test data list for applications
+        const applicationList = []
+        for (let i = 0; i < 10; i++) {
+            applicationList.push({
+                index: i,
+                user_id: i,
+                title:`User ${i}'s application`,
+                description: 'Description: abcdefg',
+                approved: false
+            })
+        }
+        this.setState({
+            applicationList: applicationList
+        })
+        
+        
+        // Test data list for feedbacks
+        const feedbackList = []
+        for (let i = 0; i < 10; i++) {
+            feedbackList.push({
+                index: i,
+                user_id: i,
+                title:`User ${i}'s feedback`,
+                description: 'Feedback Content: xxxxxxxxxxxxxx',
+                checked: false
+            })
+        }
+        this.setState({feedbackList: feedbackList})
     }
 
     render() { 
-        // Test data list for applications
-        const listData = [];
-        for (let i = 0; i < 10; i++) {
-            listData.push({
-                title:`User ${i}'s application`,
-                description: 'Description: abcdefg',
-            });
-        }
-
-        // Test data list for feedbacks
-        const feedbackListDate = [];
-        for (let i = 0; i < 10; i++) {
-            feedbackListDate.push({
-                title:`User ${i}'s feedback`,
-                description: 'Feedback Content: xxxxxxxxxxxxxx',
-            });
-        }
-
-        // const IconText = ({ icon, text }) => (
-        //     <Space>
-        //     {React.createElement(icon)}
-        //     {text}
-        //     </Space>
-        // );
-
-
         return (
             <div className="techstaff_checkpage">
                 <h1>Technical Staff Page</h1>
@@ -44,12 +67,9 @@ class TechStaff extends Component {
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                    onChange: page => {
-                        console.log(page);
-                    },
                     pageSize: 3,
                 }}
-                dataSource={listData}
+                dataSource={this.state.applicationList}
                 footer={
                     <div>
                         <b>Applaictions</b>
@@ -58,6 +78,13 @@ class TechStaff extends Component {
                 renderItem={item => (
                     <List.Item
                         key={item.title}
+                        extra={
+                            <Button onClick={() => {this.handleApplicationClick(item.user_id, item.index)}}
+                                type={item.approved ? "primary" : "default"}
+                            >
+                                {item.approved ? "Approved" : 'To Be Approved'}
+                            </Button>
+                        }
                     >
                         <List.Item.Meta
                             title={item.title}
@@ -72,12 +99,9 @@ class TechStaff extends Component {
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                    onChange: page => {
-                        console.log(page);
-                    },
                     pageSize: 3,
                 }}
-                dataSource={feedbackListDate}
+                dataSource={this.state.feedbackList}
                 footer={
                     <div>
                         <b>Feedbacks</b>
@@ -86,6 +110,13 @@ class TechStaff extends Component {
                 renderItem={item => (
                     <List.Item
                         key={item.title}
+                        extra={
+                            <Button onClick={() => {this.handleFeedbackClick(item.user_id, item.index)}}
+                                type={item.checked ? "primary" : "default"}
+                            >
+                                {item.checked ? "Unread" : 'Checked'}
+                            </Button>
+                        }
                     >
                         <List.Item.Meta
                             title={item.title}
