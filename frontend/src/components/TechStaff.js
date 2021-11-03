@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { List, Divider, Space, Button } from 'antd';
 
-//TODO Button1 for application been approved 
-//     Button2 for feedback been marked as important/has been read
-
 class TechStaff extends Component {
     constructor(props) {
         super(props);
@@ -11,8 +8,6 @@ class TechStaff extends Component {
             applicationList: [],
             feedbackList: []
         }
-
-        this.handleApplicationClick = this.handleApplicationClick.bind(this)
     }
 
     handleApplicationClick(user_id, index) {
