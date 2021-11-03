@@ -1,5 +1,10 @@
 package com.ELEC5620.MotionGame.Model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class GameInfoModel {
     public static final Integer SYSTEM_CREATED_TYPE = 1;
     public static final Integer CREATOR_CREATED_TYPE = 2;
@@ -13,44 +18,5 @@ public class GameInfoModel {
     String configFileContent;
     Integer creatorId;
     String gameName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getConfigFileContent() {
-        return configFileContent;
-    }
-
-    public void setConfigFileContent(String configFileContent) {
-        this.configFileContent = configFileContent;
-    }
-
-    public Integer getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
-    }
+    String creatorName;
 }

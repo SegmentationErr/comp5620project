@@ -45,10 +45,12 @@ public class AuthController {
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(WebSecurityConfig.SESSION_EXTEND_SECOND);
         session.setAttribute("userId",userModel.getId());
+        String str = session.getId();
+        System.out.println(str);
         ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
                 .sameSite("None")
-                .secure(true)
                 .path("/")
+                .httpOnly(true)
                 .build();
         res.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return userModel;
