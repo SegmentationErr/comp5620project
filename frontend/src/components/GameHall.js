@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies';
-import {Row, Col, Divider} from 'antd'
+import {Row, Col, Divider, notification} from 'antd'
 import GameCard from "./GameCard"
 import $axios from './Myaxios';
 import { backendURL } from '../config';
@@ -9,13 +9,7 @@ class GameHall extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                    {title: "g1", creator: "c1"},
-                    {title: "g2", creator: "c2"},
-                    {title: "g3", creator: "c3"},
-                    {title: "g4", creator: "c4"},
-                    {title: "g5", creator: "c5"}
-                  ]
+            data: [],
         }
     }
 
@@ -23,23 +17,17 @@ class GameHall extends Component {
         const url = backendURL + "gamelist"
         $axios.get(url, {withCredentials:true}
             ).then((res) => {
-                console.log(res)
               if (res.status === 200) {
-                    // cookie.save("user_id", res.data.id)
-                    // cookie.save("user_role", res.data.role)
-                    // this.props.history.push("/MotionDetectionGame/gamehall")
+                    this.setState({
+                        data: res.data
+                    })
               }
             }).catch((error) => {
-                // var msg = "Failed to Log In"
-                // if (this.state.mode === 'signup') {
-                //     msg = "Failed to Sign Up"
-                // }
-                // if (this.state.mode)
-                // notification.open({
-                //     message: msg,
-                //     description:
-                //       error.response.data.message + " Please check your input"
-                //   });
+                notification.open({
+                    message: "Failed to fetech game data",
+                    description:
+                        error.response.data.message
+                });
             })
     }
 
@@ -59,7 +47,7 @@ class GameHall extends Component {
                         {this.state.data.map((item, index) => {
                             return (
                                 <Col key={index} span={24/colNum}>
-                                    <GameCard title={item.title} creator={item.creator} />
+                                    <GameCard title={item.gameName} creator={item.creatorId} />
                                 </Col>
                             )
                         })}
