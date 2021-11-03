@@ -21,7 +21,8 @@ class GameHall extends Component {
 
     componentDidMount() {
         const url = backendURL + "gamelist"
-        axios.get(url, {}
+        axios.defaults.withCredentials = true;
+        axios.get(url, {withCredentials:true}
             ).then((res) => {
                 console.log(res)
               if (res.status === 200) {
