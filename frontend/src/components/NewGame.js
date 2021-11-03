@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button, notification, Checkbox } from 'antd';
+import { PauseOutlined, CaretRightOutlined } from '@ant-design/icons';
 import '../App.css'
 import axios from 'axios';
 import cookie from 'react-cookies';
 import { backendURL } from "../config";
+
 
 const { TextArea } = Input;
 
 class NewGame extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            bgm_playing: false,
+            bgm_chosen: 'BGM1'
+        }
+        this.audio = new Audio('/BGM1.wav')
     }
 
     render() {
@@ -41,7 +47,7 @@ class NewGame extends Component {
         };
 
         return (
-            <div className='new-game-card' >
+            <div className='new-game' >
                 <h1>{this.props.display}</h1>
                 <Form
                         name="basic"
@@ -67,7 +73,40 @@ class NewGame extends Component {
                     >
                         <TextArea rows={6} />
                     </Form.Item>
-                    <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90, textAlign: "center"}}>
+                    
+                    <Checkbox
+                        checked={this.state.bgm_chosen === 'BGM1'}
+                        onChange={()=>{this.setState({bgm_chosen: "BGM1"})}}
+                        style={{ marginTop: 60 }}
+                    >BGM1</Checkbox>
+
+                    <Checkbox
+                        checked={this.state.bgm_chosen === 'BGM2'}
+                        onChange={()=>{this.setState({bgm_chosen: "BGM2"})}}
+                    >BGM2</Checkbox>
+
+                    <Checkbox
+                        checked={this.state.bgm_chosen === 'BGM3'}
+                        onChange={()=>{this.setState({bgm_chosen: "BGM3"})}}
+                    >BGM3</Checkbox>
+                    <br/>
+                    <Button onClick={() => {
+                            if (this.state.bgm_playing) {
+                                this.audio.pause()
+                            } else {
+                                this.audio = new Audio('/' + this.state.bgm_chosen + '.wav')
+                                this.audio.play()
+                            }
+                            this.setState({bgm_playing: !this.state.bgm_playing})
+                        }}
+                        style={{marginTop: 60}}
+                        type="primary"
+                        shape="circle"
+                        size="large"
+                        icon={this.state.bgm_playing ?<PauseOutlined /> : <CaretRightOutlined />}
+                    >
+                    </Button>
+                    <Form.Item wrapperCol={{ offset: 0, span: 0 }} style={{marginTop: 90}}>
                         <Button type="primary" htmlType="submit" >
                             Submit
                         </Button>

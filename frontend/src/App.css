@@ -52,7 +52,7 @@
   margin: 5px 10px;
   border-radius: 10px;
   box-shadow: 0 0 30px rgb(218, 216, 216);
-  border: 1px solid #434AB6;
+  border: 1px solid #78bbf5;
 }
 
 
@@ -61,3 +61,6 @@
   margin-right: 50px;
 }
 
+.new-game {
+  text-align: center;
+}
