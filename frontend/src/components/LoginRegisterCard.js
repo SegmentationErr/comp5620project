@@ -11,7 +11,7 @@ class LoginRegister extends Component {
         this.state = {
             mode: 'login'
         }
-        axios.defaults.withCredentials = true
+        $axios.defaults.withCredentials = true
     }
     
     changeMode(mode) {
