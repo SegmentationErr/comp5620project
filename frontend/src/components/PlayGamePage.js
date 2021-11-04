@@ -24,7 +24,8 @@ class PlayGamePage extends Component {
         this.state = {
             score: 0,
             ranking: 0,
-            finish: false
+            finish: false,
+            data: this.props.history.location.state.data
         }
         this.webcamRef = React.createRef(null)
         this.canvasRef = React.createRef(null)
@@ -33,7 +34,7 @@ class PlayGamePage extends Component {
     
         this.onResults = this.onResults.bind(this)
     }
-
+    
     componentDidMount() {
         const pose = new Pose({
             locateFile: (file) => {

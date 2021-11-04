@@ -4,12 +4,24 @@ import {Card} from 'antd';
 class GameCard extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {}
     }
     render() { 
+        const data = this.props.data
         return (
-                <Card className="game-card" title={this.props.title} style={{width: 300}} hoverable={true} >
-                    <p> Creator: {this.props.creator }</p>
+                <Card
+                    className="game-card"
+                    title={data.gameName}
+                    style={{width: 300}}
+                    hoverable={true}
+                    onClick={() => {
+                        this.props.history.push({
+                            pathname: '/MotionDetectionGame/PlayGame_'+data.id,
+                            state: {data: data}
+                        })
+                    }}
+                >
+                    <p> Creator: {data.creatorName}</p>
                 </Card>
         );
     }

@@ -17,7 +17,6 @@ class GameHall extends Component {
         const url = backendURL + "gamelist"
         $axios.get(url, {withCredentials:true})
         .then((res) => {
-            console.log(res)
             if (res.status === 200) {
                 this.setState({
                     data: res.data
@@ -48,7 +47,7 @@ class GameHall extends Component {
                         {this.state.data.map((item, index) => {
                             return (
                                 <Col key={index} span={24/colNum}>
-                                    <GameCard title={item.gameName} creator={item.creatorId} />
+                                    <GameCard data={item} history={this.props.history} />
                                 </Col>
                             )
                         })}

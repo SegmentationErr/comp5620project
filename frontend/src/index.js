@@ -19,10 +19,10 @@ ReactDOM.render(
         <Route exact path="/" component={HomePage} />
         <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
         <Route exact path="/MotionDetectionGame/create_game" component={NewGame} />
-        <Route exact path="/test" component={PlayGamePage} />
+        <Route exact path="/MotionDetectionGame/PlayGame_:id" component={PlayGamePage} />
+        {/* <Route exact path="/test" component={PlayGamePage} /> */}
         <Route exact path="/TechnicalStaffPage" component={TechStaff} />
         <Route exact path="/testFeedback" component={FeedbackCard} />
-
       </Switch>
     </div>
   </Router>,

@@ -94,19 +94,18 @@ class NavigationBar extends Component {
       <>
         <Menu onClick={this.handleClick} selectedKeys={null} mode="horizontal">
           {cookie.load("user_role") !== "1" ?
-            <Menu.Item style={{ marginLeft: 0, background: "#648efa", color: "white" }} key="gamehall">
+            <Menu.Item style={{ marginRight: "auto", background: "#648efa", color: "white" }} key="gamehall">
               GameHall
             </Menu.Item>
             : null
           }
           {cookie.load("user_role") === "3" ? 
-            <Menu.Item style={{ marginLeft: "auto" }} key="create_game">Create Game</Menu.Item>
+            <Menu.Item key="create_game">Create Game</Menu.Item>
            : null}
           {cookie.load("user_role") === "3" ? 
             <Menu.Item key="mygames">My Games</Menu.Item>
            : null}
           <Menu.Item key="feedback" >Feedback</Menu.Item>
-
           <Menu.Item key="logout">Logout</Menu.Item>
         </Menu>
         <Modal
