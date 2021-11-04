@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, notification, Checkbox } from 'antd';
+import { Form, Input, Button, notification, Checkbox, InputNumber } from 'antd';
 import { PauseOutlined, CaretRightOutlined } from '@ant-design/icons';
 import '../App.css'
 import $axios from './Myaxios';
@@ -19,10 +19,28 @@ class NewGame extends Component {
         this.audio = new Audio('/BGM1.wav')
     }
 
+    changeBGM(bgm) {
+        this.setState({
+            bgm_playing: false,
+            bgm_chosen: bgm
+        })
+        this.audio.pause()
+    }
+
     render() {
         const onFinish = (values) => {
+            let config = {}
+            config.name = values.gameName
+            config.game = {}
+            config.game.total_target_num = values.r1 + values.r2 + values.r3 + values.r4 + values.r5
+            config.game.random_seed = values.random_seed
+            config.game.time_displayed = values.time_displayed
+            config.game.time_interval = values.time_interval
+            config.game.region_blocks = [values.r1, values.r2, values.r3, values.r4, values.r5]
+
+            var base64 = require('base-64')
             var url = backendURL + "gamecreate?" + "gameName=" + values.gameName +
-                "&configFileContent=" + values.configFileContent
+            "&configFileContent=" + base64.encode(JSON.stringify(config)) + "&bgmName=" + this.state.bgm_chosen
 
             $axios.post(url, {}
                 ).then((res) => {
@@ -66,28 +84,63 @@ class NewGame extends Component {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Config String"
-                        name="configFileContent"
-                        rules={[{ required: true, message: 'Please enter the config file content!' }]}
-                        style={{ marginTop: 60 }}
+                        label="Random Seed"
+                        name="random_seed"
+                        rules={[{ required: true, message: 'Please enter random seed!' }]}
+                        style={{ marginTop: 40 }}
                     >
-                        <TextArea rows={6} />
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Display Time (seconds)"
+                        name="time_displayed"
+                        rules={[{ required: true, message: 'Please enter displayed time!' }]}
+                        style={{ marginTop: 40 }}
+                    >
+                        <InputNumber min={1} max={10} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Interval Time (seconds)"
+                        name="time_interval"
+                        rules={[{ required: true, message: 'Please enter interval time!' }]}
+                        style={{ marginTop: 40 }}
+                    >
+                        <InputNumber min={1} max={10} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Block Number in Each Region"
+                        style={{ marginTop: 40 }}
+                    >
+                        {["1", "2", "3", "4", "5"].map((num, key) => {
+                            return (
+                                <Form.Item
+                                    key={key}
+                                    name={"r"+num}
+                                    noStyle
+                                    rules={[{ required: true, message: 'Please enter block number!' }]}
+                                >
+                                    <InputNumber placeholder={"Region "+num} min={0} max={10} style={{ marginRight: 10 }} />
+                                </Form.Item>
+                            )
+                        })}
                     </Form.Item>
                     
                     <Checkbox
                         checked={this.state.bgm_chosen === 'BGM1'}
-                        onChange={()=>{this.setState({bgm_chosen: "BGM1"})}}
+                        onChange={()=>{this.changeBGM("BGM1")}}
                         style={{ marginTop: 60 }}
                     >BGM1</Checkbox>
 
                     <Checkbox
                         checked={this.state.bgm_chosen === 'BGM2'}
-                        onChange={()=>{this.setState({bgm_chosen: "BGM2"})}}
+                        onChange={()=>{this.changeBGM("BGM2")}}
                     >BGM2</Checkbox>
 
                     <Checkbox
                         checked={this.state.bgm_chosen === 'BGM3'}
-                        onChange={()=>{this.setState({bgm_chosen: "BGM3"})}}
+                        onChange={()=>{this.changeBGM("BGM3")}}
                     >BGM3</Checkbox>
                     <br/>
                     <Button onClick={() => {

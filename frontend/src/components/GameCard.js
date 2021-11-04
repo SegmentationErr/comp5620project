@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import {Card} from 'antd'; 
 
+const base64 = require("base-64")
+
 class GameCard extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
+
     render() { 
-        const data = this.props.data
+        let data = this.props.data
         return (
                 <Card
                     className="game-card"
                     title={data.gameName}
-                    style={{width: 300}}
                     hoverable={true}
                     onClick={() => {
-                        this.props.history.push({
-                            pathname: '/MotionDetectionGame/PlayGame_'+data.id,
-                            state: {data: data}
-                        })
+                        try {
+                            data.configFileContent = JSON.parse(base64.decode(this.props.data.configFileContent))
+                            this.props.history.push({
+                                pathname: '/MotionDetectionGame/PlayGame_'+data.id,
+                                state: {data: data}
+                            })
+                        } catch(err) {
+                            console.log(err)
+                        }
                     }}
                 >
                     <p> Creator: {data.creatorName}</p>
