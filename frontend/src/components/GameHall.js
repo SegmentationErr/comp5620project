@@ -15,20 +15,21 @@ class GameHall extends Component {
 
     componentDidMount() {
         const url = backendURL + "gamelist"
-        $axios.get(url, {withCredentials:true}
-            ).then((res) => {
-              if (res.status === 200) {
-                    this.setState({
-                        data: res.data
-                    })
-              }
-            }).catch((error) => {
-                notification.open({
-                    message: "Failed to fetech game data",
-                    description:
-                        error.response.data.message
-                });
-            })
+        $axios.get(url, {withCredentials:true})
+        .then((res) => {
+            console.log(res)
+            if (res.status === 200) {
+                this.setState({
+                    data: res.data
+                })
+            }
+        }).catch((error) => {
+            notification.open({
+                message: "Failed to fetech game data",
+                description:
+                    error.response.data.message
+            });
+        })
     }
 
     render() {

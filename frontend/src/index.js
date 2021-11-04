@@ -13,6 +13,7 @@ ReactDOM.render(
   <Router>
     <div>
         <Route path="/MotionDetectionGame" component={NavigationBar} />
+        <Route path="/TechnicalStaffPage" component={NavigationBar} />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/MotionDetectionGame/gamehall" component={GameHall} />
