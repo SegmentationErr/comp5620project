@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Divider, Space, Button } from 'antd';
+import { List, Divider, Button } from 'antd';
 
 class TechStaff extends Component {
     constructor(props) {

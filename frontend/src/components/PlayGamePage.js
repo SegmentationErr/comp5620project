@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Pose } from '@mediapipe/pose';
-import * as Pose1 from '@mediapipe/pose'
 import * as cam from '@mediapipe/camera_utils'
 import Webcam from 'react-webcam';
 import SummaryCard from './SummaryCard';
@@ -36,9 +35,9 @@ class PlayGamePage extends Component {
         this.canvasRef = React.createRef(null)
         this.connect = window.drawConnectors;
         this.camera = null
-    
-        // Set canvas width
-        
+        this.audio = new Audio("/" + this.props.history.location.state.data.bgmName + ".wav")
+        this.audio.loop = true
+
         this.onResults = this.onResults.bind(this)
         // console.log(this.state.data)
     }
@@ -88,15 +87,14 @@ class PlayGamePage extends Component {
     
     start_game() {
         if (this.state.curr_rigion_ind >= this.state.region_seq.length) {
+            this.audio.pause()
             this.setState({finish: true})
             return
         }
         this.drawRect(this.state.region_seq[this.state.curr_rigion_ind], this.canvasCtx)
-        // // this.grade(poseLandmarks, this.state.curr_rigion)
 
         this.canvasCtx.restore();
 
-        
         const interval = this.state.data.configFileContent.game.time_interval * 1000
         const display_time = this.state.data.configFileContent.game.time_displayed * 1000
         
@@ -213,6 +211,7 @@ class PlayGamePage extends Component {
                 }}>Show Landmarks</button>
                 <button style={{ marginTop: 800 }} onClick={() => {
                     setTimeout(() => {
+                        this.audio.play()
                         this.start_game()
                     }, 3000)
                 }}>Start</button>

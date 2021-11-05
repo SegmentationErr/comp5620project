@@ -23,9 +23,9 @@ class LoginRegister extends Component {
     render() { 
         const onFinish = (values) => {
             // console.log('Success:', values);
-            var url = backendURL + "login?" + "password=" + values.password + "&username=" + values.username
+            var url = backendURL + "login?password=" + values.password + "&username=" + values.username
             if (this.state.mode === 'signup') {
-                url = backendURL + "register?" + "password=" + values.password + "&username=" + values.username
+                url = backendURL + "register?password=" + values.password + "&username=" + values.username
             }
 
             // const $axios = axios.create({headers: {"withCredentials":true}});

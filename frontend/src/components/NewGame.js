@@ -3,11 +3,7 @@ import { Form, Input, Button, notification, Checkbox, InputNumber } from 'antd';
 import { PauseOutlined, CaretRightOutlined } from '@ant-design/icons';
 import '../App.css'
 import $axios from './Myaxios';
-import cookie from 'react-cookies';
 import { backendURL } from "../config";
-
-
-const { TextArea } = Input;
 
 class NewGame extends Component {
     constructor(props) {
@@ -39,7 +35,7 @@ class NewGame extends Component {
             config.game.region_blocks = [values.r1, values.r2, values.r3, values.r4, values.r5]
 
             var base64 = require('base-64')
-            var url = backendURL + "gamecreate?" + "gameName=" + values.gameName +
+            var url = backendURL + "gamecreate?gameName=" + values.gameName +
             "&configFileContent=" + base64.encode(JSON.stringify(config)) + "&bgmName=" + this.state.bgm_chosen
 
             $axios.post(url, {}
