@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, notification, Menu, Avatar, Popover } from "antd";
+import { Modal, notification, Menu, Avatar, Popover, Popconfirm } from "antd";
 import "../App.css";
 import $axios from "./Myaxios";
 import cookie from "react-cookies";
@@ -15,6 +15,24 @@ class NavigationBar extends Component {
       isFeedbackModalVisible:false
     };
   }
+
+  creatorApply = (e) => {
+    console.log(e)
+    $axios.post(backendURL + "gamecreator", {})
+        .then((res) => {
+          notification.open({
+            message: "You have applied to be a Game Creator successfully",
+            description: "Thank you brave soul!",
+          });
+        }).catch((error) => {
+      notification.open({
+        message: "Failed to apply",
+        description: "No description supported.",
+      });
+    });
+
+  };
+
   handleModalOkLogout = (e) => {
     console.log(e);
     $axios.post(backendURL + "logout", {}).catch((error) => {
@@ -54,7 +72,7 @@ class NavigationBar extends Component {
             isModalVisible: true,
             handleModalOk: this.handleModalOkGameHall,
             modalContent: "You are in a game, are you sure to go to game hall?",
-           isFeedbackModalVisible:false
+            isFeedbackModalVisible:false
           });
         } else {
           this.handleModalOkGameHall();
@@ -71,6 +89,9 @@ class NavigationBar extends Component {
         break;
       case "feedback":
         this.setState({isFeedbackModalVisible:true})
+        break;
+      case "apply_creator":
+        this.creatorApply()
         break;
       default:
         console.log("default");
@@ -96,6 +117,9 @@ class NavigationBar extends Component {
           {cookie.load("user_role") === "3" ? 
             <Menu.Item key="create_game">Create Game</Menu.Item>
            : null}
+          {cookie.load("user_role") === "2" ?
+              <Menu.Item key="apply_creator">Become a Game Creator</Menu.Item>
+              : null}
           {cookie.load("user_role") !== "1" ? 
             <Menu.Item key="feedback" >Feedback</Menu.Item>
            : null}
