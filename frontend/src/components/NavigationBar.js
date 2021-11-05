@@ -61,18 +61,6 @@ class NavigationBar extends Component {
         }
         console.log("gamehall");
         break;
-      case "mygames":
-        if (true) {
-          // TODO: check whether it is in game
-          this.setState({
-            isModalVisible: true,
-            handleModalOk: this.handleModalOkMyGames,
-            modalContent:
-              "You are in a game, are you sure to go to your games page?",
-              isFeedbackModalVisible:false
-          });
-        }
-        break;
       case "create_game":
         if (true) {
           this.props.history.push("/MotionDetectionGame/create_game")
@@ -101,9 +89,6 @@ class NavigationBar extends Component {
           }
           {cookie.load("user_role") === "3" ? 
             <Menu.Item key="create_game">Create Game</Menu.Item>
-           : null}
-          {cookie.load("user_role") === "3" ? 
-            <Menu.Item key="mygames">My Games</Menu.Item>
            : null}
           <Menu.Item key="feedback" >Feedback</Menu.Item>
           <Menu.Item key="logout">Logout</Menu.Item>
