@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { List, Divider, Button } from 'antd';
+import { List, Divider, Button, notification, Table} from 'antd';
+import $axios from './Myaxios';
+import {backendURL} from "../config";
 
 class TechStaff extends Component {
     constructor(props) {
@@ -10,54 +12,107 @@ class TechStaff extends Component {
         }
     }
 
-    handleApplicationClick(user_id, index) {
-        let items = [...this.state.applicationList]
-        items[index] = {...items[index], approved: true}
-        this.setState({applicationList: items})
+    handleApplicationClick(id, index, status_id) {
+        const url = backendURL + "gamecreatorreply?" + "id=" + id + "&agree=" + status_id
+        $axios.post(url,{})
+            .then((res) => {
+                if (res.status === 200) {
+                    notification.open({
+                        message: "Application Successfully Handled!",
+                        description: "Thank you for your effort!"
+                    });
+                    const urlApp = backendURL + "gamecreator"
+                    $axios.get(urlApp, {withCredentials:true})
+                        .then((res) => {
+                            if (res.status === 200) {
+                                this.setState(prevState =>({
+                                    applicationList: res.data
+                                }));
+                            }
+                        }).catch((error) => {
+                        notification.open({
+                            message: "Failed to fetch application data",
+                            description: error.response.data.message
+                        });
+                    })
+                }
+            }).catch((error) => {
+            notification.open({
+                message: "Failed to handle this application!",
+                description: error.response.data.message
+            });
+        })
     }
 
-    handleFeedbackClick(user_id, index) {
-        let items = [...this.state.feedbackList]
-        items[index] = {...items[index], checked: true}
-        this.setState({feedbackList: items})
+    handleFeedbackClick(id, index) {
+        const url = backendURL + "markfeedback?" + "id=" + id
+        $axios.post(url,{})
+            .then((res) => {
+                if (res.status === 200) {
+                    notification.open({
+                        message: "Feedback Successfully Marked as Viewed!",
+                        description: "Thank you for your effort!"
+                    });
+                    const urlFeed = backendURL + "feedback"
+                    $axios.get(urlFeed, {withCredentials:true})
+                        .then((res) => {
+                            if (res.status === 200) {
+                                this.setState(prevState =>({
+                                    feedbackList: res.data
+                                }));
+                            }
+                        }).catch((error) => {
+                        notification.open({
+                            message: "Failed to fetch feedback data",
+                            description: error.response.data.message
+                        });
+                    })
+                }
+            }).catch((error) => {
+                notification.open({
+                    message: "Failed to mark this feedback viewed!",
+                    description: error.response.data.message
+                });
+        })
     }
 
     componentDidMount() {
-        // Test data list for applications
-        const applicationList = []
-        for (let i = 0; i < 10; i++) {
-            applicationList.push({
-                index: i,
-                user_id: i,
-                title:`User ${i}'s application`,
-                description: 'Description: abcdefg',
-                approved: false
-            })
-        }
-        this.setState({
-            applicationList: applicationList
+        const urlApp = backendURL + "gamecreator"
+        $axios.get(urlApp, {withCredentials:true})
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        applicationList: res.data
+                    })
+                }
+            }).catch((error) => {
+                notification.open({
+                    message: "Failed to fetch application data",
+                    description: error.response.data.message
+                });
         })
-        
-        
-        // Test data list for feedbacks
-        const feedbackList = []
-        for (let i = 0; i < 10; i++) {
-            feedbackList.push({
-                index: i,
-                user_id: i,
-                title:`User ${i}'s feedback`,
-                description: 'Feedback Content: xxxxxxxxxxxxxx',
-                checked: false
-            })
-        }
-        this.setState({feedbackList: feedbackList})
+
+        const urlFeed = backendURL + "feedback"
+        $axios.get(urlFeed, {withCredentials:true})
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        feedbackList: res.data
+                    })
+                }
+            }).catch((error) => {
+            notification.open({
+                message: "Failed to fetch feedback data",
+                description: error.response.data.message
+            });
+        })
     }
 
     render() { 
         return (
             <div className="techstaff_checkpage">
                 <h1>Technical Staff Page</h1>
-                <Divider orientation="center">Applaiction List</Divider>
+                <Divider orientation="center">Application List</Divider>
                 <List
                 itemLayout="vertical"
                 size="large"
@@ -74,16 +129,21 @@ class TechStaff extends Component {
                     <List.Item
                         key={item.title}
                         extra={
-                            <Button onClick={() => {this.handleApplicationClick(item.user_id, item.index)}}
-                                type={item.approved ? "primary" : "default"}
+                            [<Button onClick={() => {this.handleApplicationClick(item.id, item.index, 2)}}
+                                type={item.approvalStatus === 1 ? "primary" : "default"}
                             >
-                                {item.approved ? "Approved" : 'To Be Approved'}
-                            </Button>
+                                {item.approvalStatus === 1 ? "Approve" : 'To Be Approved'}
+                            </Button>,
+                            <Button onClick={() => {this.handleApplicationClick(item.id, item.index, 3)}}
+                                    type={item.approvalStatus === 1 ? "primary" : "default"} style={{visibility: item.approvalStatus === 1 ? 'visible' : 'hidden', marginLeft: '10px'}}
+                            >
+                                {item.approvalStatus === 1 ? "Disapprove" : 'To Be Approved'}
+                            </Button>]
                         }
                     >
                         <List.Item.Meta
-                            title={item.title}
-                            description={item.description}
+                            title={item.playerId}
+                            description={item.applyDate}
                         />
                     </List.Item>
                 )}
@@ -106,16 +166,16 @@ class TechStaff extends Component {
                     <List.Item
                         key={item.title}
                         extra={
-                            <Button onClick={() => {this.handleFeedbackClick(item.user_id, item.index)}}
-                                type={item.checked ? "primary" : "default"}
+                            <Button onClick={() => {this.handleFeedbackClick(item.id)}}
+                                type={item.viewStatus === 0 ? "primary" : "default"} disabled={item.viewStatus === 1}
                             >
-                                {item.checked ? "Checked" : 'Unread'}
+                                {item.viewStatus === 0 ? "Mark Viewed" : 'Viewed'}
                             </Button>
                         }
                     >
                         <List.Item.Meta
-                            title={item.title}
-                            description={item.description}
+                            title={item.id}
+                            description={item.feedbackContent}
                         />
                     </List.Item>
                 )}

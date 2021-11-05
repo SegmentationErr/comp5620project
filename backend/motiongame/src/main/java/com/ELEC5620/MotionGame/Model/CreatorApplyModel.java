@@ -12,7 +12,7 @@ public class CreatorApplyModel {
 
     Integer id;
     Integer playerId;
-    Long applyDate;
+    String applyDate;
     Integer approvalStatus;
-    Long decisionDate;
+    String decisionDate;
 }
