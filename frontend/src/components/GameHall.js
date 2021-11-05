@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import cookie from 'react-cookies';
 import {Row, Col, Divider, notification} from 'antd'
 import GameCard from "./GameCard"
 import $axios from './Myaxios';
@@ -32,14 +31,10 @@ class GameHall extends Component {
     }
 
     render() {
-        const user_id = cookie.load("user_id")
-        const user_role = cookie.load("user_role")
         const colNum = 3
 
         return (
             <div>
-                <h1>UserID: {user_id}</h1>
-                <h1>User Role: {user_role}</h1>
                 <Divider orientation="center">Game List</Divider>
 
                 <div className="gamecards_in_gamehall">

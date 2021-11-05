@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, notification, Menu } from "antd";
+import { Modal, notification, Menu, Avatar, Popover } from "antd";
 import "../App.css";
 import $axios from "./Myaxios";
 import cookie from "react-cookies";
@@ -78,6 +78,12 @@ class NavigationBar extends Component {
   };
 
   render() {
+    let user_role = "Normal Player"
+    if (cookie.load("user_role") === "1") {
+      user_role = "Technical Staff"
+    } if (cookie.load("user_role") === "3") {
+      user_role = "Game Creator"
+    }
     return (
       <>
         <Menu onClick={this.handleClick} selectedKeys={null} mode="horizontal">
@@ -90,8 +96,17 @@ class NavigationBar extends Component {
           {cookie.load("user_role") === "3" ? 
             <Menu.Item key="create_game">Create Game</Menu.Item>
            : null}
-          <Menu.Item key="feedback" >Feedback</Menu.Item>
-          <Menu.Item key="logout">Logout</Menu.Item>
+          {cookie.load("user_role") !== "1" ? 
+            <Menu.Item key="feedback" >Feedback</Menu.Item>
+           : null}
+          <Menu.Item key="logout" style={{ marginLeft: cookie.load("user_role") === "1" ? "auto" : 0}}>Logout</Menu.Item>
+          <Menu.Item key="avatar">
+            <Popover placement="bottomRight" content={(
+                <p>{user_role}</p>
+            )}>
+                <Avatar style={{backgroundColor: "#369ecf"}}>{user_role[0]}</Avatar>
+            </Popover>
+          </Menu.Item>
         </Menu>
         <Modal
           title="Warning"
