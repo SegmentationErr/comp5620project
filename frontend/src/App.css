@@ -39,6 +39,7 @@
   width: 1280px;
   height: 720px;
   border-radius: 30px;
+  margin-top: 30px;
 }
 
 @keyframes blinker {

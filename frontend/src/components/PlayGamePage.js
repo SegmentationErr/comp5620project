@@ -5,6 +5,9 @@ import Webcam from 'react-webcam';
 import SummaryCard from './SummaryCard';
 
 import '../App.css'
+import { Progress } from 'antd';
+import { backendURL } from '../config';
+import $axios from './Myaxios';
 
 const width = 1280
 const height = 720
@@ -16,6 +19,7 @@ const regions = [
     {x: padding, y: height / 2, w: width / 2 - padding * 2, h: height / 2},
     {x: width / 2 + padding, y: height / 2, w: width / 2 - padding * 2, h: height / 2},
 ];
+let if_start = false
 
 class PlayGamePage extends Component {
     constructor(props) {
@@ -28,21 +32,22 @@ class PlayGamePage extends Component {
             ranking: 0,
             finish: false,
             curr_rigion_ind: 0,
-            show_landmarks: false
+            highest_scores: []
         }
 
         this.webcamRef = React.createRef(null)
         this.canvasRef = React.createRef(null)
         this.connect = window.drawConnectors;
         this.camera = null
+        this.bingo = new Audio("/bingo.wav")
         this.audio = new Audio("/" + this.props.history.location.state.data.bgmName + ".wav")
         this.audio.loop = true
 
         this.onResults = this.onResults.bind(this)
-        // console.log(this.state.data)
     }
     
     componentDidMount() {
+        this.get_score()
         let game_config = this.state.data.configFileContent.game
         let region_seq = this.generate_seq(game_config.total_target_num, game_config.region_blocks)
         this.setState({region_seq: region_seq})
@@ -70,7 +75,9 @@ class PlayGamePage extends Component {
         ) {
             this.camera = new cam.Camera(this.webcamRef.current.video, {
                 onFrame: async () => {
-                    await pose.send({ image: this.webcamRef.current.video });
+                    if (this.webcamRef.current !== null) {
+                        await pose.send({ image: this.webcamRef.current.video });
+                    }
                 },
                 width: width,
                 height: height,
@@ -85,10 +92,37 @@ class PlayGamePage extends Component {
         this.canvasCtx = this.canvasElement.getContext("2d")
     }
     
+    get_score() {
+        const url = backendURL + "gamescore?gameId=" + this.props.history.location.state.data.id
+        $axios.get(url, {withCredentials:true})
+        .then((res) => {
+            if (res.status === 200) {
+                this.setState({
+                    highest_scores: res.data
+                })
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    post_score() {
+        const url = backendURL + "gamescore?gameId=" + this.props.history.location.state.data.id + "&score=" + this.state.score
+        $axios.post(url, {withCredentials:true})
+        .then((res) => {
+            if (res.status === 200) {
+                console.log(res)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
     start_game() {
         if (this.state.curr_rigion_ind >= this.state.region_seq.length) {
-            this.audio.pause()
             this.setState({finish: true})
+            this.post_score()
+            this.audio.pause()
             return
         }
         this.drawRect(this.state.region_seq[this.state.curr_rigion_ind], this.canvasCtx)
@@ -100,11 +134,9 @@ class PlayGamePage extends Component {
         
         setTimeout(() => {
             this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height)
-            console.log("clear")
             if (! this.state.finish) {
                 this.setState({curr_rigion_ind: this.state.curr_rigion_ind + 1})
                 setTimeout(() => {
-                    console.log("draw")
                    this.start_game()
                 }, interval)
             }
@@ -139,7 +171,6 @@ class PlayGamePage extends Component {
                 region_blocks[i]--;
             }
         }
-        console.log(res)
         return res
     }
 
@@ -181,10 +212,10 @@ class PlayGamePage extends Component {
     }
 
     onResults(results) {
-        // console.log(this.state.curr_rigion_ind)
         if (results.poseLandmarks !== undefined && this.state.curr_rigion_ind < this.state.region_seq.length) {  
             let poseLandmarks = this.mirrorLandmarks(results.poseLandmarks)
             if (this.grade(poseLandmarks, this.state.region_seq[this.state.curr_rigion_ind])) {
+                this.bingo.play()
                 this.setState({
                     score: this.state.score + 10
                 })
@@ -204,7 +235,13 @@ class PlayGamePage extends Component {
     render() { 
         return (
             <div>
-                <h1 style={{textAlign: "right", paddingTop: 20, paddingRight: 30}}>Score: {this.state.score}</h1>
+                <button onClick={() => {
+                    console.log(this.state.highest_scores)
+                    this.setState({finish: true})}}>click</button>
+                <h1 style={{float: "right", paddingTop: 20, paddingRight: 30}}>Score: {this.state.score}</h1>
+                <div style={{textAlign: "center", paddingTop: 20}}>
+                    <Progress style={{width: 1000}} showInfo={false} percent={this.state.curr_rigion_ind / this.state.region_seq.length * 100}/>
+                </div>
                 <Webcam
                     className="camera"
                     ref={this.webcamRef}
@@ -217,23 +254,19 @@ class PlayGamePage extends Component {
                 <canvas
                     className="camera"
                     ref={this.canvasRef}
+                    onClick={() => {
+                        if (! if_start) {
+                            if_start = true
+                            this.count_down(3)
+                            setTimeout(() => {
+                                this.audio.play()
+                                this.start_game()
+                            }, 3300)
+                        }
+                    }}
                 >
                 </canvas>
-                <button style={{ marginTop: 800 }} onClick={() => {
-                    this.setState({finish: !this.state.finish})
-                }}>Test Summary</button>
-                <button style={{ marginTop: 800 }} onClick={() => {
-                    this.setState({show_landmarks: !this.state.show_landmarks})
-                }}>Show Landmarks</button>
-                <button style={{ marginTop: 800 }} onClick={() => {
-                    this.count_down(3)
-                    setTimeout(() => {
-                        this.audio.play()
-                        this.start_game()
-                    }, 3300)
-                }}>Start</button>
-                <h1>{this.state.curr_rigion_ind} / {this.state.region_seq.length} finished</h1>
-                <SummaryCard score={this.state.score} ranking={this.state.ranking} display={this.state.finish} />
+                <SummaryCard score={this.state.score} highest_scores={this.state.highest_scores} display={this.state.finish} history={this.props.history} />
             </div>
         );
     }
