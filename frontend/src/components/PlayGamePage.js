@@ -111,6 +111,22 @@ class PlayGamePage extends Component {
         }, display_time)
     }
 
+    count_down(num) {
+        this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height)
+        if (num === 0) return
+        
+        this.canvasCtx.beginPath();
+        this.canvasCtx.font = "250px Arial ";
+        this.canvasCtx.textAlign = "center";
+        this.canvasCtx.textBaseline = "center";
+        this.canvasCtx.fillStyle = "#0077ff";
+        this.canvasCtx.fillText(num, 640, 430);
+        this.canvasCtx.stroke();
+        setTimeout(() => {
+            this.count_down(num - 1)
+        }, 1000);
+    }
+
     generate_seq(total, region_blocks) {
         let res = []
         var rand = require("random-seed").create()
@@ -210,10 +226,11 @@ class PlayGamePage extends Component {
                     this.setState({show_landmarks: !this.state.show_landmarks})
                 }}>Show Landmarks</button>
                 <button style={{ marginTop: 800 }} onClick={() => {
+                    this.count_down(3)
                     setTimeout(() => {
                         this.audio.play()
                         this.start_game()
-                    }, 3000)
+                    }, 3300)
                 }}>Start</button>
                 <h1>{this.state.curr_rigion_ind} / {this.state.region_seq.length} finished</h1>
                 <SummaryCard score={this.state.score} ranking={this.state.ranking} display={this.state.finish} />
