@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class GameCreatorController {
             applyModel = new CreatorApplyModel();
             applyModel.setPlayerId(playerId);
             applyModel.setApprovalStatus(CreatorApplyModel.APPROVAL_STATUS_WAITING_ASSESS);
-            applyModel.setApplyDate(new Date().getTime());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            applyModel.setApplyDate(formatter.format(new Date().getTime()));
             creatorApplyService.insert(applyModel);
         }
         return 1;
@@ -66,10 +68,11 @@ public class GameCreatorController {
             throw new MyException("CreatorApply has been marked.");
         }
         creatorApplyModel.setApprovalStatus(agree);
-        creatorApplyModel.setDecisionDate(new Date().getTime());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        creatorApplyModel.setDecisionDate(formatter.format(new Date().getTime()));
         boolean ret = creatorApplyService.updateApproval(creatorApplyModel);
         if (ret){
-            if (agree == 1){
+            if (agree == 2){
                 UserModel userModel = userService.select(creatorApplyModel.getPlayerId());
                 if (userModel.getRole() == UserModel.NORMAL_PLAYER_ROLE){
                     userService.updateRole(creatorApplyModel.getPlayerId(), UserModel.GAME_CREATOR_ROLE);
