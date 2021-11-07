@@ -212,7 +212,7 @@ class PlayGamePage extends Component {
     }
 
     onResults(results) {
-        if (results.poseLandmarks !== undefined && this.state.curr_rigion_ind < this.state.region_seq.length) {  
+        if (if_start && results.poseLandmarks !== undefined && this.state.curr_rigion_ind < this.state.region_seq.length) {  
             let poseLandmarks = this.mirrorLandmarks(results.poseLandmarks)
             if (this.grade(poseLandmarks, this.state.region_seq[this.state.curr_rigion_ind])) {
                 this.bingo.play()
