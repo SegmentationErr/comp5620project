@@ -16,13 +16,10 @@ class FeedbackCard extends Component {
 
     this.state = {
       feedbackType:'2',
-      isFeedbackModalVisible: false,
     };
 
   }
-  componentWillReceiveProps(props) {
-    this.setState({ isFeedbackModalVisible: props.isFeedbackModalVisible })
-  }
+
   getOptionsWithDisabled = ()=>{
     const bDisabled = (cookie.load("user_role") === "2")
     return [
@@ -36,7 +33,7 @@ class FeedbackCard extends Component {
     console.log(url);
 
     $axios.post(url, {}).then(()=>{
-      this.setState({isFeedbackModalVisible:false, isSuccessModalVisible:true})
+      this.setState({isSuccessModalVisible:true})
 
     }).catch((error) => {
       var msg = "Failed to post a feedback";
@@ -78,12 +75,12 @@ class FeedbackCard extends Component {
       <>
         <Modal
           title="Post a feedback"
-          visible={this.state.isFeedbackModalVisible}
+          visible={this.props.isFeedbackModalVisible}
           maskClosable={false}
           onOk={this.handleModalOk}
           okText="Post"
           onCancel={() => {
-            this.setState({ isFeedbackModalVisible: false });
+            this.props.diable_func()
           }}
         >
           <p style={{float:'left', marginRight:'30px'}}>Role of the feedback: </p>

@@ -43,6 +43,7 @@ class NavigationBar extends Component {
     });
     this.props.history.push("/");
   };
+  
   handleModalOkGameHall = (e) => {
     console.log(e);
     this.setState({isModalVisible: false})
@@ -51,7 +52,7 @@ class NavigationBar extends Component {
 
   handleClick = (e) => {
     console.log("click ", e.key);
-    this.setState({isFeedbackModalVisible:false})
+    // this.setState({isFeedbackModalVisible:false})
     switch (e.key) {
       case "logout":
         console.log("logout");
@@ -90,6 +91,10 @@ class NavigationBar extends Component {
         console.log("default");
     }
   };
+
+  hide_feedback_modal() {
+    this.setState({isFeedbackModalVisible: false})
+  }
 
   render() {
     let user_role = "Normal Player"
@@ -136,7 +141,10 @@ class NavigationBar extends Component {
         >
           <p>{this.state.modalContent}</p>
         </Modal>
-        <FeedbackCard isFeedbackModalVisible={this.state.isFeedbackModalVisible}></FeedbackCard>
+        <FeedbackCard
+          isFeedbackModalVisible={this.state.isFeedbackModalVisible}
+          diable_func={this.hide_feedback_modal.bind(this)}
+        />
       </>
     );
   }
