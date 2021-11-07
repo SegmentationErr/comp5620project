@@ -16,11 +16,15 @@
     npm install
     ```
     
-- Using following command to run frontend, the frontend server will run on [localhost://5000](http://localhost:5000) by default
-    
-    ```bash
-    npm start
-    ```
+- Using following command to run frontend, the frontend server will run on [localhost://8000](http://localhost:8000) by default
+    - MacOS/Linux 
+        ```bash
+        npm start
+        ```
+    - Windows
+        ```bash
+        npm start-win
+        ```
 
 ### Backend
 
