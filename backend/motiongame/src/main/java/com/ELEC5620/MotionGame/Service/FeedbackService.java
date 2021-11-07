@@ -25,8 +25,8 @@ public class FeedbackService {
         return feedbackMapper.select(id);
     }
 
-    public List<FeedbackModel> selectAll() {
-        return feedbackMapper.selectAll();
+    public List<FeedbackModel> selectAllUnMarked() {
+        return feedbackMapper.selectAllUnMarked();
     }
 
     public boolean updateValue(FeedbackModel feedback) {
