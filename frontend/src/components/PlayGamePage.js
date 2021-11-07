@@ -235,9 +235,6 @@ class PlayGamePage extends Component {
     render() { 
         return (
             <div>
-                <button onClick={() => {
-                    console.log(this.state.highest_scores)
-                    this.setState({finish: true})}}>click</button>
                 <h1 style={{float: "right", paddingTop: 20, paddingRight: 30}}>Score: {this.state.score}</h1>
                 <div style={{textAlign: "center", paddingTop: 20}}>
                     <Progress style={{width: 1000}} showInfo={false} percent={this.state.curr_rigion_ind / this.state.region_seq.length * 100}/>

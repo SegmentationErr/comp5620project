@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Modal, notification, Menu, Dropdown, Button,Input,Radio} from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Modal, notification, Menu, Input, Radio } from "antd";
 import "../App.css";
 import $axios from "./Myaxios";
 import cookie from "react-cookies";
 import { backendURL } from "../config";
+
 const {TextArea} = Input
+
 class FeedbackCard extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ class FeedbackCard extends Component {
   };
 
   handleModalOk = (e) => {
-    var url = backendURL + "feedback?" + "content=" + this.state.textAreaContent + "&userRole=" + this.state.feedbackType
+    var url = backendURL + "feedback?content=" + this.state.textAreaContent + "&userRole=" + this.state.feedbackType
     console.log(url);
 
     $axios.post(url, {}).then(()=>{

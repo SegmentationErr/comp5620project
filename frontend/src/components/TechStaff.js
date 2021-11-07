@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Divider, Button, notification, Table} from 'antd';
+import { List, Divider, Button, notification } from 'antd';
 import $axios from './Myaxios';
 import {backendURL} from "../config";
 
@@ -13,7 +13,7 @@ class TechStaff extends Component {
     }
 
     handleApplicationClick(id, index, status_id) {
-        const url = backendURL + "gamecreatorreply?" + "id=" + id + "&agree=" + status_id
+        const url = backendURL + "gamecreatorreply?id=" + id + "&agree=" + status_id
         $axios.post(url,{})
             .then((res) => {
                 if (res.status === 200) {
@@ -45,7 +45,7 @@ class TechStaff extends Component {
     }
 
     handleFeedbackClick(id, index) {
-        const url = backendURL + "markfeedback?" + "id=" + id
+        const url = backendURL + "markfeedback?id=" + id
         $axios.post(url,{})
             .then((res) => {
                 if (res.status === 200) {

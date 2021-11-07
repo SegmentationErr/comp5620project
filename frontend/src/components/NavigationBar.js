@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, notification, Menu, Avatar, Popover, Popconfirm } from "antd";
+import { Modal, notification, Menu, Avatar, Popover } from "antd";
 import "../App.css";
 import $axios from "./Myaxios";
 import cookie from "react-cookies";
@@ -30,7 +30,6 @@ class NavigationBar extends Component {
         description: "No description supported.",
       });
     });
-
   };
 
   handleModalOkLogout = (e) => {
@@ -46,13 +45,10 @@ class NavigationBar extends Component {
   };
   handleModalOkGameHall = (e) => {
     console.log(e);
+    this.setState({isModalVisible: false})
     this.props.history.push("/MotionDetectionGame/gamehall");
   };
-  handleModalOkMyGames = (e) => {
-    console.log(e);
-    // TODO: check the url name is mygames or others
-    this.props.history.push("/MotionDetectionGame/mygames");
-  };
+
   handleClick = (e) => {
     console.log("click ", e.key);
     switch (e.key) {
@@ -66,8 +62,8 @@ class NavigationBar extends Component {
         });
         break;
       case "gamehall":
-        if (true) {
-          // TODO: check whether it is in game
+        let url = this.props.history.location.pathname.split("/")
+        if (url.length >= 3 && url[2].substr(0, 8) === "PlayGame") {
           this.setState({
             isModalVisible: true,
             handleModalOk: this.handleModalOkGameHall,
@@ -80,11 +76,7 @@ class NavigationBar extends Component {
         console.log("gamehall");
         break;
       case "create_game":
-        if (true) {
-          this.props.history.push("/MotionDetectionGame/create_game")
-        } else {
-          this.handleModalOkMyGames();
-        }
+        this.props.history.push("/MotionDetectionGame/create_game")
         console.log("mygames");
         break;
       case "feedback":
