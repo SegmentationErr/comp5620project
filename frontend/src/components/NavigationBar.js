@@ -51,6 +51,7 @@ class NavigationBar extends Component {
 
   handleClick = (e) => {
     console.log("click ", e.key);
+    this.setState({isFeedbackModalVisible:false})
     switch (e.key) {
       case "logout":
         console.log("logout");
@@ -75,8 +76,7 @@ class NavigationBar extends Component {
         }
         console.log("gamehall");
         break;
-      case "create_game":
-        this.setState({isFeedbackModalVisible:false})
+        case "create_game":
         this.props.history.push("/MotionDetectionGame/create_game")
         console.log("create game");
         break;
