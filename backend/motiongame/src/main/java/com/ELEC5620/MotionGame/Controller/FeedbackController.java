@@ -18,7 +18,7 @@ public class FeedbackController {
 
     @GetMapping("/feedback")
     public List<FeedbackModel> listAll(){
-        return feedbackService.selectAll();
+        return feedbackService.selectAllUnMarked();
     }
 
     @PostMapping("/feedback")

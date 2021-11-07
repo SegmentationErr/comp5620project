@@ -18,8 +18,8 @@ public interface FeedbackMapper {
     @Select("SELECT * FROM feedback WHERE id = #{id}")
     FeedbackModel select(int id);
 
-    @Select("SELECT * FROM feedback")
-    List<FeedbackModel> selectAll();
+    @Select("SELECT * FROM feedback WHERE viewStatus = 0")
+    List<FeedbackModel> selectAllUnMarked();
 
     @Update("UPDATE feedback SET value=#{value} WHERE id = #{id}")
     int updateValue(FeedbackModel feedback);
