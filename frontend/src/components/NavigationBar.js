@@ -76,8 +76,9 @@ class NavigationBar extends Component {
         console.log("gamehall");
         break;
       case "create_game":
+        this.setState({isFeedbackModalVisible:false})
         this.props.history.push("/MotionDetectionGame/create_game")
-        console.log("mygames");
+        console.log("create game");
         break;
       case "feedback":
         this.setState({isFeedbackModalVisible:true})
